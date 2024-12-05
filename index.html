@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жаңа жылдық шақыру</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+            overflow-x: hidden;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        /* Анимация снега */
+        #snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            width: 12px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: fall linear infinite;
+            animation-duration: calc(2s + (Math.random() * 3)) !important;
+        }
+
+        /* Контейнер с контентом */
+        .container {
+            text-align: center;
+            padding: 80px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            z-index: 10;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4em;
+            color: #ff6347;
+            text-shadow: 0 0 20px rgba(255, 99, 71, 0.8);
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 1.5em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            background: #ff4500;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+
+        .button:hover {
+            background: #ff6347;
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .chat {
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: 30px auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat h3 {
+            margin: 0 0 20px;
+            color: #333;
+            font-size: 1.5em;
+        }
+
+        .chat textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            border: 1px solid #ddd;
+            resize: none;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .chat textarea:focus {
+            border-color: #ff4500;
+            outline: none;
+        }
+
+        .dark-mode {
+            background-color: #2e3b4e;
+            color: #f0f8ff;
+        }
+
+        .dark-mode h1 {
+            color: #ffeb3b;
+        }
+
+        .dark-mode .chat {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode .button {
+            background: #ffeb3b;
+            color: #333;
+        }
+
+        .dark-mode .button:hover {
+            background: #ffe033;
+        }
+
+        /* Музыкальные кнопки */
+        .music-controls {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .music-controls button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background-color 0.3s;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .music-controls button:hover {
+            background-color: #45a049;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Для кнопки переключения режима */
+        .mode-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6347;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .mode-toggle-btn:hover {
+            background: #ff4500;
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Снег -->
+    <div id="snow"></div>
+    <div class="container">
+        <h1>Құрметті ұстаздар!</h1>
+        <p>Сіздерді мектебімізде өтетін жаңа жылдық кешімізге шақырамыз!</p>
+        <p>✨ Күні: 27 желтоқсан <br> ✨ Уақыты: 18:00 <br> ✨ Орны: Абай атындағы №2 мектеп</p>
+        <button class="button" onclick="showCard()">Мен қатысамын</button>
+        <div id="card" style="display:none; margin-top: 20px;">
+            <p>Біз сізді асыға күтеміз! Жаңа жылда бірге болайық!</p>
+        </div>
+    </div>
+
+    <!-- Чат -->
+    <div class="chat">
+        <h3>Тілектеріңізді жазыңыз:</h3>
+        <textarea id="chat-input" rows="3"></textarea>
+        <button class="button" onclick="sendMessage()">Жіберу</button>
+        <div id="messages" style="margin-top: 10px;"></div>
+    </div>
+
+    <!-- Переключатель темы -->
+    <button class="mode-toggle-btn" onclick="toggleDarkMode()">🌙</button>
+
+    <!-- Музыка -->
+    <div class="music-controls">
+        <button onclick="toggleMusic()">🎵 Включить/выключить музыку</button>
+        <audio id="background-music" loop>
+            <source src="Wham_-_Last_Christmas_48076479.mp3" type="audio/mp3">
+            Ваш браузер не поддерживает элемент audio.
+        </audio>
+    </div>
+
+    <script>
+        // Генерация снега
+        const snow = document.getElementById('snow');
+        for (let i = 0; i < 100; i++) {
+            const flake = document.createElement('div');
+            flake.classList.add('snowflake');
+            flake.style.left = Math.random() * 100 + 'vw';
+            flake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            flake.style.opacity = Math.random();
+            snow.appendChild(flake);
+        }
+
+        // Показ виртуальной открытки
+        function showCard() {
+            document.getElementById('card').style.display = 'block';
+        }
+
+        // Добавление сообщений в чат
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const messages = document.getElementById('messages');
+            if (input.value.trim()) {
+                const message = document.createElement('div');
+                message.textContent = input.value;
+                messages.appendChild(message);
+                input.value = '';
+            }
+        }
+
+        // Переключение темного режима
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        // Включение/выключение музыки
+        function toggleMusic() {
+            const music = document.getElementById('background-music');
+            if (music.paused) {
+                music.play();
+            } else {
+                music.pause();
+            }
+        }
+    </script>
+</body>
+</html>
